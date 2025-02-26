@@ -28,4 +28,4 @@ This repository contains the **MarathonX**—a fully responsive website built wi
 
 ## Live Demo
 
-Available for real-time use: [MarathonX client Live Demo](https://marathon-b3537.web.app)
+## Live: https://marathon-management-app.web.app/
