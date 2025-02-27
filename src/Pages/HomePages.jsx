@@ -8,7 +8,7 @@ import MarathonCardList from "../Component/MarathonCardList";
 import { Helmet } from "react-helmet";
 const HomePages = () => {
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900 text-black dark:text-white">
       <Helmet>
         {" "}
         <title>HomePage</title>{" "}

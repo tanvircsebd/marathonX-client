@@ -27,7 +27,7 @@ const Banner = () => {
   ];
 
   return (
-    <section className="relative w-full h-[80vh] mt-16">
+    <section className="relative w-full h-[80vh] mt-16 bg-white dark:bg-gray-900 text-black dark:text-white">
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
