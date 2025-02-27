@@ -11,7 +11,7 @@ import AddMarathon from "../Pages/AddMarathon";
 import Dashboard from "../Pages/Dashbroad";
 import MyMarathon from "../Pages/MyMarathon";
 import ApplyList from "../Pages/ApplyList";
-import Dashbroadimg from "../Component/Dashbroadimg"; 
+import Dashbroadimg from "../Component/Dashbroadimg";
 import MarathonDetails from "../Component/MarathonDetails";
 import MarathonRegistration from "../Component/MarathonRegistration";
 import About from "../Component/About";
@@ -28,15 +28,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/marathons",
-        element: <Private><AllMarathons></AllMarathons></Private>,
+        element: (
+          <Private>
+            <AllMarathons></AllMarathons>
+          </Private>
+        ),
       },
       {
         path: `/marathon/:id`,
-        element: <Private><MarathonDetails></MarathonDetails></Private>,
+        element: (
+          <Private>
+            <MarathonDetails></MarathonDetails>
+          </Private>
+        ),
       },
       {
         path: "/register/:id",
-        element: <Private><MarathonRegistration></MarathonRegistration></Private>,
+        element: (
+          <Private>
+            <MarathonRegistration></MarathonRegistration>
+          </Private>
+        ),
       },
       {
         path: "/about",
@@ -46,28 +58,47 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <ContactUs></ContactUs>,
       },
-      
     ],
   },
   {
     path: "/dashboard",
-    element: <Private><Dashboard></Dashboard></Private>,
+    element: (
+      <Private>
+        <Dashboard></Dashboard>
+      </Private>
+    ),
     children: [
       {
-        index: true, 
-        element: <Private><Dashbroadimg></Dashbroadimg></Private>,
+        index: true,
+        element: (
+          <Private>
+            <Dashbroadimg></Dashbroadimg>
+          </Private>
+        ),
       },
       {
-        path:"/dashboard/addMarathon",
-        element: <Private><AddMarathon /></Private>,
+        path: "/dashboard/addMarathon",
+        element: (
+          <Private>
+            <AddMarathon />
+          </Private>
+        ),
       },
       {
         path: "/dashboard/my-marathon",
-        element: <Private><MyMarathon></MyMarathon></Private>,
+        element: (
+          <Private>
+            <MyMarathon></MyMarathon>
+          </Private>
+        ),
       },
       {
         path: "/dashboard/my-apply-list",
-        element: <Private><ApplyList></ApplyList></Private>,
+        element: (
+          <Private>
+            <ApplyList></ApplyList>
+          </Private>
+        ),
       },
     ],
   },

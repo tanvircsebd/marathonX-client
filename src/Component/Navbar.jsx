@@ -256,6 +256,18 @@ const Navbar = () => {
                   Dashboard
                 </NavLink>
               )}
+              {currentUser && (
+                <NavLink
+                  className={({ isActive }) =>
+                    `text-lg font-bold ${
+                      isActive ? "text-red-500 underline" : "text-white"
+                    }`
+                  }
+                  to="/dashboard/my-marathon"
+                >
+                  My Marathons
+                </NavLink>
+              )}
             </ul>
 
             {/* Auth Buttons */}
@@ -354,6 +366,18 @@ const Navbar = () => {
                   to="/dashboard"
                 >
                   Dashboard
+                </NavLink>
+              )}
+              {currentUser && (
+                <NavLink
+                  className={({ isActive }) =>
+                    `text-lg font-bold ${
+                      isActive ? "text-red-500 underline" : "text-white"
+                    }`
+                  }
+                  to="/dashboard/my-marathon"
+                >
+                  My Marathons
                 </NavLink>
               )}
             </ul>
