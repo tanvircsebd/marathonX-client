@@ -1,34 +1,34 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { AuthenticationContext } from '../Provider/AuthProvider';
-import Loading from './Loading';
-import { Helmet } from 'react-helmet';
+import React, { useContext, useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthenticationContext } from "../Provider/AuthProvider";
+import Loading from "./Loading";
+import { Helmet } from "react-helmet";
 
 const MarathonRegister = () => {
-  const { id } = useParams(); 
-  const { currentUser } = useContext(AuthenticationContext); 
+  const { id } = useParams();
+  const { currentUser } = useContext(AuthenticationContext);
   const [marathon, setMarathon] = useState(null);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    contactNumber: '',
-    additionalInfo: '',
+    firstName: "",
+    lastName: "",
+    contactNumber: "",
+    additionalInfo: "",
   });
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  // const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = "https://marathonx-server.vercel.app";
   const navigate = useNavigate();
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
-  
     axios
-      .get(`${backendUrl}/allMarathon/${id}`,{withCredentials:true})
+      .get(`${backendUrl}/allMarathon/${id}`, { withCredentials: true })
       .then((response) => {
-        console.log('Fetched marathon:', response.data); 
+        console.log("Fetched marathon:", response.data);
         setMarathon(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching marathon details:', error);
+        console.error("Error fetching marathon details:", error);
       });
   }, [id]);
 
@@ -40,9 +40,8 @@ const MarathonRegister = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-   
     if (!marathon || !marathon.title) {
-      setToastMessage('Marathon title is missing.');
+      setToastMessage("Marathon title is missing.");
       return;
     }
 
@@ -58,12 +57,12 @@ const MarathonRegister = () => {
     axios
       .post(`${backendUrl}/registerMarathon`, registrationData)
       .then(() => {
-        setToastMessage('Registration successful!');
-        setTimeout(() => navigate('/dashboard/my-apply-list'), 3000); // Redirect after 3 seconds
+        setToastMessage("Registration successful!");
+        setTimeout(() => navigate("/dashboard/my-apply-list"), 3000); // Redirect after 3 seconds
       })
       .catch((error) => {
-        console.error('Error during registration:', error);
-        setToastMessage('Error during registration.');
+        console.error("Error during registration:", error);
+        setToastMessage("Error during registration.");
       });
   };
 
@@ -73,7 +72,9 @@ const MarathonRegister = () => {
 
   return (
     <div className="container mx-auto p-6 md:w-6/12 mt-20">
-      <Helmet><title>MarathonsRegister</title></Helmet>
+      <Helmet>
+        <title>MarathonsRegister</title>
+      </Helmet>
       {toastMessage && (
         <div className="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded">
           {toastMessage}
@@ -94,7 +95,9 @@ const MarathonRegister = () => {
 
         {/* Marathon Title (Read-only) */}
         <div>
-          <label className="block font-semibold text-gray-700">Marathon Title</label>
+          <label className="block font-semibold text-gray-700">
+            Marathon Title
+          </label>
           <input
             type="text"
             value={marathon.title}
@@ -105,7 +108,9 @@ const MarathonRegister = () => {
 
         {/* Start Date (Read-only) */}
         <div>
-          <label className="block font-semibold text-gray-700">Start Date</label>
+          <label className="block font-semibold text-gray-700">
+            Start Date
+          </label>
           <input
             type="text"
             value={new Date(marathon.startDate).toLocaleDateString()}
@@ -116,7 +121,9 @@ const MarathonRegister = () => {
 
         {/* First Name */}
         <div>
-          <label className="block font-semibold text-gray-700">First Name</label>
+          <label className="block font-semibold text-gray-700">
+            First Name
+          </label>
           <input
             type="text"
             name="firstName"
@@ -142,7 +149,9 @@ const MarathonRegister = () => {
 
         {/* Contact Number */}
         <div>
-          <label className="block font-semibold text-gray-700">Contact Number</label>
+          <label className="block font-semibold text-gray-700">
+            Contact Number
+          </label>
           <input
             type="text"
             name="contactNumber"
@@ -155,7 +164,9 @@ const MarathonRegister = () => {
 
         {/* Additional Info */}
         <div>
-          <label className="block font-semibold text-gray-700">Additional Info</label>
+          <label className="block font-semibold text-gray-700">
+            Additional Info
+          </label>
           <textarea
             name="additionalInfo"
             value={formData.additionalInfo}

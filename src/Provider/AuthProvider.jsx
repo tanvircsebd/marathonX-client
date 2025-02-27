@@ -99,7 +99,7 @@ const AuthenticationProvider = ({ children }) => {
       if (user?.email) {
         const currentUser = { email: user.email };
         axios
-          .post("http://localhost:5000/jwt", currentUser, {
+          .post("https://marathonx-server.vercel.app/jwt", currentUser, {
             withCredentials: true,
           })
           .then((res) => {
@@ -112,7 +112,11 @@ const AuthenticationProvider = ({ children }) => {
           });
       } else {
         axios
-          .post("http://localhost:5000/logout", {}, { withCredentials: true })
+          .post(
+            "https://marathonx-server.vercel.app/logout",
+            {},
+            { withCredentials: true }
+          )
           .then((res) => {
             console.log("logout", res.data);
             setIsLoading(false);

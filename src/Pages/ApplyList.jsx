@@ -1,26 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AuthenticationContext } from '../Provider/AuthProvider';
-import { Helmet } from 'react-helmet';
-import useSecureAxios from '../Hook/useSecureAxios';
-import Swal from 'sweetalert2'; 
+import React, { useState, useEffect, useContext } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthenticationContext } from "../Provider/AuthProvider";
+import { Helmet } from "react-helmet";
+import useSecureAxios from "../Hook/useSecureAxios";
+import Swal from "sweetalert2";
 const ApplyList = () => {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  // const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const BACKEND_URL = "https://marathonx-server.vercel.app";
   const [registrations, setRegistrations] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const { currentUser } = useContext(AuthenticationContext);
-  const currentUserEmail = currentUser ? currentUser.email : '';
+  const currentUserEmail = currentUser ? currentUser.email : "";
   const [modalVisible, setModalVisible] = useState(false);
   const [currentRegistration, setCurrentRegistration] = useState(null);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    contactNumber: '',
-    additionalInfo: '',
+    firstName: "",
+    lastName: "",
+    contactNumber: "",
+    additionalInfo: "",
   });
 
-  const axiosInstance = useSecureAxios(); 
+  const axiosInstance = useSecureAxios();
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
@@ -30,25 +31,22 @@ const ApplyList = () => {
         const { data } = await axiosInstance.get(url); // Use axiosInstance here
         setRegistrations(data);
       } catch (error) {
-        toast.error('Failed to fetch registrations');
+        toast.error("Failed to fetch registrations");
       }
     };
 
     fetchRegistrations();
   }, [currentUserEmail, searchQuery, axiosInstance]);
 
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -56,44 +54,44 @@ const ApplyList = () => {
         registrationId: currentRegistration._id,
         ...formData,
       });
-      toast.success('Registration updated successfully');
+      toast.success("Registration updated successfully");
       setModalVisible(false);
-      const { data } = await axiosInstance.get(`${BACKEND_URL}/regMarathon/user/${currentUserEmail}`);
+      const { data } = await axiosInstance.get(
+        `${BACKEND_URL}/regMarathon/user/${currentUserEmail}`
+      );
       setRegistrations(data);
     } catch (error) {
-      toast.error('Failed to update registration');
+      toast.error("Failed to update registration");
     }
   };
 
- 
   const handleDelete = async (registrationId) => {
-    
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to delete this registration? This action cannot be undone!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "Do you want to delete this registration? This action cannot be undone!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await axiosInstance.delete(`${BACKEND_URL}/deleteRegistration`, {
             data: { registrationId },
           });
-          toast.success('Registration deleted successfully');
-          const { data } = await axiosInstance.get(`${BACKEND_URL}/regMarathon/user/${currentUserEmail}`);
+          toast.success("Registration deleted successfully");
+          const { data } = await axiosInstance.get(
+            `${BACKEND_URL}/regMarathon/user/${currentUserEmail}`
+          );
           setRegistrations(data);
         } catch (error) {
-          toast.error('Failed to delete registration');
+          toast.error("Failed to delete registration");
         }
       }
     });
   };
-  
 
-  
   const showUpdateModal = (registration) => {
     setCurrentRegistration(registration);
     setFormData({
@@ -125,7 +123,9 @@ const ApplyList = () => {
           onChange={handleSearchChange}
           className="border p-2 w-full sm:w-3/4 mb-2 sm:mb-0"
         />
-        <button className="bg-blue-500 text-white px-4 py-2 rounded sm:ml-2">Search</button>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded sm:ml-2">
+          Search
+        </button>
       </div>
 
       <div className="overflow-x-auto">
@@ -154,8 +154,12 @@ const ApplyList = () => {
                 </td>
                 <td className="border px-4 py-2">{registration.firstName}</td>
                 <td className="border px-4 py-2">{registration.lastName}</td>
-                <td className="border px-4 py-2">{registration.contactNumber}</td>
-                <td className="border px-4 py-2">{registration.additionalInfo}</td>
+                <td className="border px-4 py-2">
+                  {registration.contactNumber}
+                </td>
+                <td className="border px-4 py-2">
+                  {registration.additionalInfo}
+                </td>
                 <td className="border px-4 py-2">
                   <button
                     onClick={() => showUpdateModal(registration)}
@@ -177,83 +181,99 @@ const ApplyList = () => {
       </div>
 
       {modalVisible && (
-  <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-    <div className="bg-white p-6 rounded-lg w-full sm:w-1/3">
-      <h2 className="text-xl font-semibold mb-4">Update Registration</h2>
-      <form onSubmit={handleUpdate}>
-        {/* Marathon Title */}
-        <div className="mb-4">
-          <label htmlFor="marathonTitle" className="block">Marathon Title</label>
-          <p className="border p-2 w-full">{currentRegistration.title}</p>
-        </div>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg w-full sm:w-1/3">
+            <h2 className="text-xl font-semibold mb-4">Update Registration</h2>
+            <form onSubmit={handleUpdate}>
+              {/* Marathon Title */}
+              <div className="mb-4">
+                <label htmlFor="marathonTitle" className="block">
+                  Marathon Title
+                </label>
+                <p className="border p-2 w-full">{currentRegistration.title}</p>
+              </div>
 
-        {/* Marathon Start Date */}
-        <div className="mb-4">
-          <label htmlFor="startDate" className="block">Start Date</label>
-          <p className="border p-2 w-full">{new Date(currentRegistration.startDate).toLocaleDateString()}</p>
-        </div>
+              {/* Marathon Start Date */}
+              <div className="mb-4">
+                <label htmlFor="startDate" className="block">
+                  Start Date
+                </label>
+                <p className="border p-2 w-full">
+                  {new Date(currentRegistration.startDate).toLocaleDateString()}
+                </p>
+              </div>
 
-     
-        <div className="mb-4">
-          <label htmlFor="firstName" className="block">First Name</label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
+              <div className="mb-4">
+                <label htmlFor="firstName" className="block">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className="border p-2 w-full"
+                  required
+                />
+              </div>
 
-        <div className="mb-4">
-          <label htmlFor="lastName" className="block">Last Name</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
+              <div className="mb-4">
+                <label htmlFor="lastName" className="block">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  className="border p-2 w-full"
+                  required
+                />
+              </div>
 
-        <div className="mb-4">
-          <label htmlFor="contactNumber" className="block">Contact Number</label>
-          <input
-            type="text"
-            name="contactNumber"
-            value={formData.contactNumber}
-            onChange={handleInputChange}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
+              <div className="mb-4">
+                <label htmlFor="contactNumber" className="block">
+                  Contact Number
+                </label>
+                <input
+                  type="text"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleInputChange}
+                  className="border p-2 w-full"
+                  required
+                />
+              </div>
 
-        <div className="mb-4">
-          <label htmlFor="additionalInfo" className="block">Additional Info</label>
-          <textarea
-            name="additionalInfo"
-            value={formData.additionalInfo}
-            onChange={handleInputChange}
-            className="border p-2 w-full"
-          />
-        </div>
+              <div className="mb-4">
+                <label htmlFor="additionalInfo" className="block">
+                  Additional Info
+                </label>
+                <textarea
+                  name="additionalInfo"
+                  value={formData.additionalInfo}
+                  onChange={handleInputChange}
+                  className="border p-2 w-full"
+                />
+              </div>
 
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
-          Update
-        </button>
-        <button
-          type="button"
-          onClick={closeModal}
-          className="bg-gray-500 text-white px-4 py-2 rounded ml-2"
-        >
-          Close
-        </button>
-      </form>
-    </div>
-  </div>
-)}
+              <button
+                type="submit"
+                className="bg-green-500 text-white px-4 py-2 rounded"
+              >
+                Update
+              </button>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded ml-2"
+              >
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       <ToastContainer />
     </div>

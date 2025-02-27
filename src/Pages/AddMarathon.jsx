@@ -1,32 +1,29 @@
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
-import DatePicker from 'react-datepicker';
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AuthenticationContext } from '../Provider/AuthProvider';
-import { Helmet } from 'react-helmet';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthenticationContext } from "../Provider/AuthProvider";
+import { Helmet } from "react-helmet";
 
 const AddMarathon = () => {
-  const { currentUser } = useContext(AuthenticationContext); 
+  const { currentUser } = useContext(AuthenticationContext);
 
   const [formData, setFormData] = useState({
-    email: currentUser?.email || '', 
-    title: '',
-    startRegistrationDate: null, 
-    endRegistrationDate: null, 
-    startDate: null, 
-    location: '',
-    runningDistance: '',
-    description: '',
-    image: '',
-    totalRegistrationCount: 0, 
-    createdAt: new Date(), 
+    email: currentUser?.email || "",
+    title: "",
+    startRegistrationDate: null,
+    endRegistrationDate: null,
+    startDate: null,
+    location: "",
+    runningDistance: "",
+    description: "",
+    image: "",
+    totalRegistrationCount: 0,
+    createdAt: new Date(),
   });
-  
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -49,31 +46,34 @@ const AddMarathon = () => {
 
     const updatedFormData = {
       ...formData,
-      createdAt: new Date().toISOString(), 
+      createdAt: new Date().toISOString(),
     };
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/allMarathon`,
+        // `${import.meta.env.VITE_BACKEND_URL}/allMarathon`,
+        `https://marathonx-server.vercel.app/allMarathon`,
         updatedFormData,
         { withCredentials: true }
       );
-      console.log('Marathon data saved:', response.data);
-      toast.success('Marathon added successfully!');
+      console.log("Marathon data saved:", response.data);
+      toast.success("Marathon added successfully!");
     } catch (error) {
-      console.error('Error saving marathon data:', error);
-      toast.error('Error saving marathon data!');
+      console.error("Error saving marathon data:", error);
+      toast.error("Error saving marathon data!");
     }
   };
 
   return (
     <div className="container mx-auto p-6">
-      <Helmet><title>Add marathom</title></Helmet>
+      <Helmet>
+        <title>Add marathom</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-6">Add Marathon</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Email Field */}
         <div>
-          <label  className="block text-xl mb-2">User Email</label>
+          <label className="block text-xl mb-2">User Email</label>
           <input
             type="email"
             id="email"
@@ -86,7 +86,7 @@ const AddMarathon = () => {
 
         {/* Marathon Title */}
         <div>
-          <label  className="block text-xl mb-2">Marathon Title</label>
+          <label className="block text-xl mb-2">Marathon Title</label>
           <input
             type="text"
             id="title"
@@ -100,10 +100,10 @@ const AddMarathon = () => {
 
         {/* Start Registration Date */}
         <div>
-          <label  className="block text-xl mb-2">Start Registration Date</label>
+          <label className="block text-xl mb-2">Start Registration Date</label>
           <DatePicker
             selected={formData.startRegistrationDate}
-            onChange={(date) => handleDateChange(date, 'startRegistrationDate')}
+            onChange={(date) => handleDateChange(date, "startRegistrationDate")}
             className="w-full p-3 border border-gray-300 rounded-lg"
             required
           />
@@ -111,10 +111,10 @@ const AddMarathon = () => {
 
         {/* End Registration Date */}
         <div>
-          <label  className="block text-xl mb-2">End Registration Date</label>
+          <label className="block text-xl mb-2">End Registration Date</label>
           <DatePicker
             selected={formData.endRegistrationDate}
-            onChange={(date) => handleDateChange(date, 'endRegistrationDate')}
+            onChange={(date) => handleDateChange(date, "endRegistrationDate")}
             className="w-full p-3 border border-gray-300 rounded-lg"
             required
           />
@@ -122,10 +122,10 @@ const AddMarathon = () => {
 
         {/* Marathon Start Date */}
         <div>
-          <label  className="block text-xl mb-2">Marathon Start Date</label>
+          <label className="block text-xl mb-2">Marathon Start Date</label>
           <DatePicker
             selected={formData.startDate}
-            onChange={(date) => handleDateChange(date, 'startDate')}
+            onChange={(date) => handleDateChange(date, "startDate")}
             className="w-full p-3 border border-gray-300 rounded-lg"
             required
           />
@@ -133,7 +133,7 @@ const AddMarathon = () => {
 
         {/* Location */}
         <div>
-          <label  className="block text-xl mb-2">Location</label>
+          <label className="block text-xl mb-2">Location</label>
           <input
             type="text"
             id="location"
@@ -145,7 +145,7 @@ const AddMarathon = () => {
           />
         </div>
         <div>
-          <label  className="block text-xl mb-2">Created Time</label>
+          <label className="block text-xl mb-2">Created Time</label>
           <input
             type="text"
             id="createdAt"
@@ -159,7 +159,7 @@ const AddMarathon = () => {
 
         {/* Running Distance */}
         <div>
-          <label  className="block text-xl mb-2">Running Distance</label>
+          <label className="block text-xl mb-2">Running Distance</label>
           <select
             id="runningDistance"
             name="runningDistance"
@@ -176,7 +176,7 @@ const AddMarathon = () => {
 
         {/* Description */}
         <div>
-          <label  className="block text-xl mb-2">Description</label>
+          <label className="block text-xl mb-2">Description</label>
           <textarea
             id="description"
             name="description"
@@ -189,7 +189,7 @@ const AddMarathon = () => {
 
         {/* Marathon Image */}
         <div>
-          <label  className="block text-xl mb-2">Marathon Image URL</label>
+          <label className="block text-xl mb-2">Marathon Image URL</label>
           <input
             type="text"
             id="image"
@@ -201,7 +201,7 @@ const AddMarathon = () => {
           />
         </div>
         <div>
-          <label  className="block text-xl mb-2">Total Registration Count</label>
+          <label className="block text-xl mb-2">Total Registration Count</label>
           <input
             type="text"
             id="count"
@@ -231,4 +231,3 @@ const AddMarathon = () => {
 };
 
 export default AddMarathon;
-  

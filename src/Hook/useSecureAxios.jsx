@@ -46,8 +46,8 @@ import { useContext } from "react";
 
 const axiosInstance = axios.create({
   //   baseURL: "https://marathonx-server.vercel.app",
-  //   baseURL: "http://localhost:5000",
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: "https://marathonx-server.vercel.app",
+  // baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
 });
 

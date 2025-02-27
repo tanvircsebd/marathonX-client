@@ -9,7 +9,8 @@ const MarathonCardList = () => {
     const fetchMarathons = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/allMarathonlimit`
+          // `${import.meta.env.VITE_BACKEND_URL}/allMarathonlimit`
+          `https://marathonx-server.vercel.app/allMarathonlimit`
         );
         setMarathons(response.data);
       } catch (error) {
