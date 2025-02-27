@@ -23,7 +23,7 @@ const MarathonCardList = () => {
 
   return (
     <section className="bg-gray-100 ">
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto">
         <h1 className="text-center text-3xl font-bold mt-10 mb-6">
           Currently Active Marathons
         </h1>

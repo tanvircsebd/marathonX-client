@@ -6,7 +6,7 @@ import female2 from "../assets/female3.jpg";
 const Testimonials = () => {
   return (
     <section className="bg-gray-100 py-12 text-white">
-      <div className="container mx-auto px-6 text-center">
+      <div className="container mx-auto text-center">
         <h2 className="text-4xl font-bold mb-8 text-black">
           What Runners Are Saying
         </h2>

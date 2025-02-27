@@ -14,11 +14,13 @@ const HomePages = () => {
         <title>HomePage</title>{" "}
       </Helmet>
       <Banner></Banner>
-      <MarathonCardList></MarathonCardList>
-      <WhyChooseUs></WhyChooseUs>
-      <EventCard></EventCard>
-      <TrainingSection></TrainingSection>
-      <Testimonials></Testimonials>
+      <div className="w-11/12 mx-auto">
+        <MarathonCardList />
+        <WhyChooseUs />
+        <EventCard />
+        <TrainingSection />
+        <Testimonials />
+      </div>
     </div>
   );
 };
